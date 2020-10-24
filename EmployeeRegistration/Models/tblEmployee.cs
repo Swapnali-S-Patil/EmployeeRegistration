@@ -20,8 +20,11 @@ namespace EmployeeRegistration.Models
 
         [Required(ErrorMessage = "Please Enter First Name")]
         [StringLength(30, MinimumLength = 3)]
+
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
 
+        [DisplayName("Last Name")]
         [Required(ErrorMessage = "Please Enter Last Name")]
         public string LastName { get; set; }
 
@@ -31,8 +34,14 @@ namespace EmployeeRegistration.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<bool> Gender { get; set; }
+
+        [DisplayName("Marrital Status")]
         public Nullable<bool> MarritalStatus { get; set; }
+
+        [DisplayName("Country Name")]
         public Nullable<int> CountryID { get; set; }
+
+        [DisplayName("State Name")]
         public Nullable<int> StateID { get; set; }
         public string Address { get; set; }
         public string Hobbies { get; set; }

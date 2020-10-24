@@ -24,7 +24,7 @@ namespace EmployeeRegistration.Models
         }
     
         public int CountryID { get; set; }
-
+        [DisplayName("Country Name")]
         [Required(ErrorMessage = "Please Enter Country Name")]
         public string CountryName { get; set; }
     

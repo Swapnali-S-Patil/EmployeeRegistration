@@ -222,6 +222,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EmployeesModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ErrorLog.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\tblCountry.cs">
@@ -375,6 +376,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Logs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

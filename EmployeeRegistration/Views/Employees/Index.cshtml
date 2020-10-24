@@ -1,10 +1,5 @@
 ﻿@model IEnumerable<EmployeeRegistration.Models.tblEmployee>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -53,10 +48,18 @@
             @Html.DisplayFor(modelItem => item.DOB)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Gender)
+           
+            @if (item.Gender != null)
+            {
+                @(item.Gender.Value==false ? Html.Raw("Male") : Html.Raw("Female"))
+            }
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.MarritalStatus)
+            
+            @if (item.MarritalStatus != null)
+            {
+                @(item.MarritalStatus.Value == false ? Html.Raw("UnMarried") : Html.Raw("Married"))
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Address)

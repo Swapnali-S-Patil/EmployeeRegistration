@@ -11,7 +11,9 @@ namespace EmployeeRegistration.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class tblState
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +24,9 @@ namespace EmployeeRegistration.Models
     
         public int StateID { get; set; }
         public int CountryID { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Country Name")]
+        [DisplayName("State Name")]
         public string StateName { get; set; }
     
         public virtual tblCountry tblCountry { get; set; }

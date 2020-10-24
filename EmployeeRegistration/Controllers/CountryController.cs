@@ -48,6 +48,8 @@ namespace EmployeeRegistration.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CountryID,CountryName")] tblCountry tblCountry)
         {
+            try
+            { 
             if (ModelState.IsValid)
             {
                 db.tblCountries.Add(tblCountry);
@@ -56,6 +58,13 @@ namespace EmployeeRegistration.Controllers
             }
 
             return View(tblCountry);
+            }
+            catch (Exception ex)
+            {
+                ErrorLog ObjError = new ErrorLog();
+                ObjError.Log(ex.Message);
+                return View();
+            }
         }
 
         // GET: Country/Edit/5
