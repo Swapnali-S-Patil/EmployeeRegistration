@@ -11,7 +11,9 @@ namespace EmployeeRegistration.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class tblCountry
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +24,8 @@ namespace EmployeeRegistration.Models
         }
     
         public int CountryID { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Country Name")]
         public string CountryName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
