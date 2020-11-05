@@ -30,7 +30,7 @@ namespace EmployeeRegistration.Models
 
         [Required(ErrorMessage = "Please Enter Date of Birth")]
         [DisplayName("Date of Birth")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date)]       
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> DOB { get; set; }
         public Nullable<bool> Gender { get; set; }
@@ -45,7 +45,8 @@ namespace EmployeeRegistration.Models
         public Nullable<int> StateID { get; set; }
         public string Address { get; set; }
         public string Hobbies { get; set; }
-    
+
+        [DisplayName("Country Name")]
         public virtual tblCountry tblCountry { get; set; }
         public virtual tblState tblState { get; set; }
 

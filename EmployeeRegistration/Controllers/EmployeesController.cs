@@ -20,7 +20,7 @@ namespace EmployeeRegistration.Controllers
 
             var tblEmployees = db.tblEmployees.Include(t => t.tblCountry).Include(t => t.tblState);
 
-            
+
             return View(tblEmployees.ToList());
         }
 
@@ -42,10 +42,10 @@ namespace EmployeeRegistration.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-            
+
             ViewBag.CountryID = new SelectList(db.tblCountries, "CountryID", "CountryName");
-            ViewBag.StateID = new SelectList(db.tblStates, "StateID", "StateName");         
-            
+            ViewBag.StateID = new SelectList(db.tblStates, "StateID", "StateName");
+
 
             return View();
         }
@@ -61,6 +61,11 @@ namespace EmployeeRegistration.Controllers
         {
             try
             {
+                if (ModelState.IsValidField("DOB") && (DateTime.Now < tblEmployee.DOB))
+                {
+                    ModelState.AddModelError("DOB", "Please enter date in the past");
+                }
+
                 if (ModelState.IsValid)
                 {
                     db.tblEmployees.Add(tblEmployee);
@@ -68,10 +73,11 @@ namespace EmployeeRegistration.Controllers
                     return RedirectToAction("Index");
                 }
 
+
                 ViewBag.CountryID = new SelectList(db.tblCountries, "CountryID", "CountryName", tblEmployee.CountryID);
                 ViewBag.StateID = new SelectList(db.tblStates, "StateID", "StateName", tblEmployee.StateID);
                 return View(tblEmployee);
-                
+
             }
             catch (Exception ex)
             {
@@ -79,32 +85,32 @@ namespace EmployeeRegistration.Controllers
                 ObjError.Log(ex.Message);
                 return View();
             }
-            
+
         }
 
         // GET: Employees/Edit/5
         public ActionResult Edit(int? id)
         {
             try
-            {          
-
-            if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblEmployee tblEmployee = db.tblEmployees.Find(id);
-            if (tblEmployee == null)
-            {
-                return HttpNotFound();
-            }
-            //  (tblEmployee.DOB)=Convert.ToDateTime(Convert.ToDateTime(tblEmployee.DOB).ToString("yyyy-mm-yyyy"));
 
-           
-            ViewBag.Date =Convert.ToDateTime(tblEmployee.DOB).ToString("yyyy-MM-dd");
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                tblEmployee tblEmployee = db.tblEmployees.Find(id);
+                if (tblEmployee == null)
+                {
+                    return HttpNotFound();
+                }
+                //  (tblEmployee.DOB)=Convert.ToDateTime(Convert.ToDateTime(tblEmployee.DOB).ToString("yyyy-mm-yyyy"));
 
-            ViewBag.CountryID = new SelectList(db.tblCountries, "CountryID", "CountryName", tblEmployee.CountryID);
-            ViewBag.StateID = new SelectList(db.tblStates, "StateID", "StateName", tblEmployee.StateID);
-            return View(tblEmployee);
+
+                ViewBag.Date = Convert.ToDateTime(tblEmployee.DOB).ToString("yyyy-MM-dd");
+
+                ViewBag.CountryID = new SelectList(db.tblCountries, "CountryID", "CountryName", tblEmployee.CountryID);
+                ViewBag.StateID = new SelectList(db.tblStates, "StateID", "StateName", tblEmployee.StateID);
+                return View(tblEmployee);
             }
             catch (Exception ex)
             {
@@ -122,16 +128,23 @@ namespace EmployeeRegistration.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EmpolyeeID,FirstName,LastName,DOB,Gender,MarritalStatus,CountryID,StateID,Address,Hobbies")] tblEmployee tblEmployee)
         {
-            try { 
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(tblEmployee).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CountryID = new SelectList(db.tblCountries, "CountryID", "CountryName", tblEmployee.CountryID);
-            ViewBag.StateID = new SelectList(db.tblStates, "StateID", "StateName", tblEmployee.StateID);
-            return View(tblEmployee);
+
+                if (ModelState.IsValidField("DOB") && (DateTime.Now < tblEmployee.DOB))
+                {
+                    ModelState.AddModelError("DOB", "Please enter a date in the past");
+                }
+
+                if (ModelState.IsValid)
+                {
+                    db.Entry(tblEmployee).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.CountryID = new SelectList(db.tblCountries, "CountryID", "CountryName", tblEmployee.CountryID);
+                ViewBag.StateID = new SelectList(db.tblStates, "StateID", "StateName", tblEmployee.StateID);
+                return View(tblEmployee);
             }
             catch (Exception ex)
             {
@@ -144,17 +157,18 @@ namespace EmployeeRegistration.Controllers
         // GET: Employees/Delete/5
         public ActionResult Delete(int? id)
         {
-            try { 
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblEmployee tblEmployee = db.tblEmployees.Find(id);
-            if (tblEmployee == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tblEmployee);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                tblEmployee tblEmployee = db.tblEmployees.Find(id);
+                if (tblEmployee == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(tblEmployee);
             }
             catch (Exception ex)
             {
@@ -169,11 +183,12 @@ namespace EmployeeRegistration.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            try { 
-            tblEmployee tblEmployee = db.tblEmployees.Find(id);
-            db.tblEmployees.Remove(tblEmployee);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                tblEmployee tblEmployee = db.tblEmployees.Find(id);
+                db.tblEmployees.Remove(tblEmployee);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
